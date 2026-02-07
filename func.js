@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Correct Selectors using IDs instead of classes
+    // 1. Selectors
     const slotButtons = document.querySelectorAll('.slot-btn');
     const dateInput = document.getElementById('bookingDate'); 
     const proceedBtn = document.getElementById('proceedBtn'); 
+    const sportSelect = document.getElementById('sportSelect'); // NEW: Added Sport Selector
     
     // Auth Elements
     const authForm = document.getElementById('authForm');
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedSlot = null;
     let isLogin = true;
 
-    // 2. Set minimum date
+    // 2. Set minimum date to today
     if (dateInput) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
@@ -37,8 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (proceedBtn) {
         proceedBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            
             const selectedDate = dateInput.value;
+            const selectedSport = sportSelect ? sportSelect.value : null; // NEW: Capture Sport
 
+            // Validation
+            if (!selectedSport) {
+                alert("Please select a sport.");
+                return;
+            }
             if (!selectedDate) {
                 alert("Please select a date.");
                 return;
@@ -48,12 +56,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Send data to book.php
             fetch('book.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     date: selectedDate,
                     slot: selectedSlot,
+                    sport: selectedSport, // NEW: Added sport to the request
                     turf: "TurfLegends Arena"
                 })
             })
@@ -61,14 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 alert(data.status === 'success' ? "🎉 " + data.message : "❌ " + data.message);
                 if (data.status === 'success') window.location.reload();
+            })
+            .catch(err => {
+                console.error("Booking Error:", err);
+                alert("An error occurred during booking.");
             });
         });
     }
 
-    // 5. FIXED: Auth Toggle Logic
+    // 5. Auth Toggle Logic
     if (toggleBtn) {
         toggleBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent any default link behavior
+            e.preventDefault(); 
             isLogin = !isLogin;
             
             if (isLogin) {
@@ -91,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const authData = {
                 action: isLogin ? 'login' : 'signup',
-                name: document.getElementById('authName').value,
+                name: document.getElementById('authName') ? document.getElementById('authName').value : "",
                 email: document.getElementById('authEmail').value,
                 password: document.getElementById('authPassword').value
             };
@@ -108,7 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (isLogin) window.location.reload();
                     else toggleBtn.click();
                 }
+            })
+            .catch(err => {
+                console.error("Auth Error:", err);
+                alert("An error occurred during authentication.");
             });
         });
     }
-});
+}); 

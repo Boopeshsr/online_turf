@@ -88,36 +88,42 @@
         </div>
     </section>
 
-    <section id="slots" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5 fw-bold">Available Slots</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card p-4 shadow-sm">
-                        <label class="form-label fw-bold">Select Date</label>
-                        <input type="date" id="bookingDate" class="form-control mb-4">
-                        
-                        <label class="form-label fw-bold">Morning Slots</label>
-                        <div class="d-flex flex-wrap mb-3">
-                            <button class="btn btn-outline-success slot-btn">06:00 AM</button>
-                            <button class="btn btn-outline-success slot-btn">07:00 AM</button>
-                            <button class="btn btn-outline-success slot-btn">08:00 AM</button>
-                        </div>
-
-                        <label class="form-label fw-bold">Evening Slots</label>
-                        <div class="d-flex flex-wrap mb-4">
-                            <button class="btn btn-outline-success slot-btn">05:00 PM</button>
-                            <button class="btn btn-outline-success slot-btn">06:00 PM</button>
-                            <button class="btn btn-outline-success slot-btn">07:00 PM</button>
-                            <button class="btn btn-outline-success slot-btn">08:00 PM</button>
-                        </div>
-                        
-                        <button id="proceedBtn" class="btn btn-success w-100 py-3 fw-bold">Proceed to Payment</button>
+<section id="slots" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Available Slots</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-4 shadow-sm border-0">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Select Sport</label>
+                        <select id="sportSelect" class="form-select form-select-lg">
+                            <option value="" selected disabled>Choose your game...</option>
+                            <option value="Cricket">Cricket</option>
+                            <option value="Football">Football</option>
+                            <option value="Badminton">Badminton</option>
+                        </select>
                     </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Select Date</label>
+                        <input type="date" id="bookingDate" class="form-control form-control-lg">
+                    </div>
+                    
+                    <label class="form-label fw-bold mb-3">Available Time Slots</label>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <button class="btn btn-outline-success slot-btn">06:00 AM</button>
+                        <button class="btn btn-outline-success slot-btn">07:00 AM</button>
+                        <button class="btn btn-outline-success slot-btn">05:00 PM</button>
+                        <button class="btn btn-outline-success slot-btn">06:00 PM</button>
+                        <button class="btn btn-outline-success slot-btn">07:00 PM</button>
+                    </div>
+                    
+                    <button id="proceedBtn" class="btn btn-success w-100 py-3 fw-bold shadow-sm">Confirm Booking</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="location" class="py-5 bg-light">
         <div class="container">
